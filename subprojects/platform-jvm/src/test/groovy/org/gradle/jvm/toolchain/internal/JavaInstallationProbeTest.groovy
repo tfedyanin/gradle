@@ -119,6 +119,8 @@ class JavaInstallationProbeTest extends Specification {
 //        'hpuxJre6'                            | hpuxJvm('6')     | JavaVersion.VERSION_1_6 | 'HP-UX JRE 6'  | true | true  | IS_JRE
 //        'hpuxJdk7'                            | hpuxJvm('7')     | JavaVersion.VERSION_1_7 | 'HP-UX JDK 7'  | true | false | IS_JDK
         'whitespaces'                         | whitespaces('11.0.3')  | JavaVersion.VERSION_11  | 'AdoptOpenJDK JRE 11' | true   | true  | IS_JRE
+        'whitespaces2'                         | whitespaces2('11.0.3')  | JavaVersion.VERSION_11  | 'AdoptOpenJDK JRE 11' | true   | true  | IS_JRE
+        'whitespaces3'                         | whitespaces3('11.0.3')  | JavaVersion.VERSION_11  | 'AdoptOpenJDK JRE 11' | true   | true  | IS_JRE
         'binary that has invalid output'      | invalidOutput()  | null                    | null           | true | false | INVALID_JDK
         'binary that returns unknown version' | invalidVersion() | null                    | null           | true | false | INVALID_JDK
     }
@@ -188,6 +190,28 @@ class JavaInstallationProbeTest extends Specification {
 
     private static Map<String, String> whitespaces(String version) {
         ['java.home': "home-with-whitespaces\r\t",
+         'java.version': version,
+         'java.vendor': "AdoptOpenJDK",
+         'os.arch': "x86_64\r",
+         'java.vm.name': "OpenJDK 64-Bit Server VM",
+         'java.vm.version': "${version}+7",
+         'java.runtime.name': "OpenJDK Runtime Environment"
+        ]
+    }
+
+    private static Map<String, String> whitespaces2(String version) {
+        ['java.home': "home-with-whitespaces2\r\n",
+         'java.version': version,
+         'java.vendor': "AdoptOpenJDK",
+         'os.arch': "x86_64\r",
+         'java.vm.name': "OpenJDK 64-Bit Server VM",
+         'java.vm.version': "${version}+7",
+         'java.runtime.name': "OpenJDK Runtime Environment"
+        ]
+    }
+
+    private static Map<String, String> whitespaces3(String version) {
+        ['java.home': "home-with-whitespaces3\n\r",
          'java.version': version,
          'java.vendor': "AdoptOpenJDK",
          'os.arch': "x86_64\r",
